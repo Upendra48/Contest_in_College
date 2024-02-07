@@ -53,3 +53,40 @@ Every country has 2 representatives in the decision making room.
 
 */
 
+#include <iostream>
+#include <unordered_map>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string input;
+    cin >> input;
+
+    unordered_map<char, int> counts;
+    string output = "";
+
+    // Count the number of representatives from each country
+    for (char c : input) {
+        counts[c]++;
+    }
+
+    // Find the minimum count among the representatives from different countries
+    int minCount = INT_MAX;
+    for (const auto& kv : counts) {
+        minCount = min(minCount, kv.second);
+    }
+
+    // Construct the output string by including only one representative from each country
+    for (int i = input.size() - 1; i >= 0; --i) {
+        char c = input[i];
+        if (counts[c] <= minCount) {
+            output = c + output;
+        }
+        counts[c]--;
+    }
+
+    cout << output << endl;
+
+    return 0;
+}

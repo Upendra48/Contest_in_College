@@ -58,17 +58,16 @@ So, we return 3 as the position of second CD containing same movie Preeti was lo
 */
 
 #include <iostream>
-#include <unordered_map>
 #include <vector>
+#include <string>
+
 using namespace std;
 
-int findSecondCD(vector<string>& cds, int index) {
-    unordered_map<string, int> map;
-    for (int i = 0; i < cds.size(); i++) {
-        if (map.count(cds[i]) && map[cds[i]] != index) {
+int findSecondCD(const vector<string>& CDs, const string& firstCD, int startIndex) {
+    for (int i = startIndex + 1; i < CDs.size(); ++i) {
+        if (CDs[i] == firstCD) {
             return i;
         }
-        map[cds[i]] = i;
     }
     return -1;
 }
@@ -76,12 +75,19 @@ int findSecondCD(vector<string>& cds, int index) {
 int main() {
     int n;
     cin >> n;
-    vector<string> cds(n);
-    for (int i = 0; i < n; i++) {
-        cin >> cds[i];
+
+    vector<string> CDs(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> CDs[i];
     }
-    int index;
-    cin >> index;
-    cout << findSecondCD(cds, index) << endl;
+
+    int firstCDIndex;
+    cin >> firstCDIndex;
+
+    string firstCD = CDs[firstCDIndex];
+    int secondCDIndex = findSecondCD(CDs, firstCD, firstCDIndex);
+
+    cout << secondCDIndex << endl;
+
     return 0;
 }
